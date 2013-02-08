@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Private Surveyor</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <script type="text/javascript" src="model.js"></script>
     <link href="styles.css" rel="stylesheet" />
   </head>
   <body>
@@ -14,31 +15,7 @@
 
         <img src="img/net.png" />
         Scenario:
-        <table>
-          <tr>
-            <th></th>
-            <th>Email Provider</th>
-            <th>Internet Core</th>
-            <th>Your ISP</th>
-            <th>Your Network</th>
-            <th>Your Computer</th>
-          </tr>
-          <tr>
-            <th>Email Address</th>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-          </tr>
-          <tr>
-            <th>Pysical Address</th>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-          </tr>
+        <table id="dataTable">
         </table>
         <button class="btn btn-large btn-primary" type="submit">Next</button>
       </form>

@@ -24,6 +24,7 @@ var answers = [];
 
 window.onload = function() {
   render();
+  setup();
 };
 
 var render = function() {
@@ -62,4 +63,29 @@ var render = function() {
   
   // Set Table State.
   // TODO: complete
+
+  // Set Button State.
+  var next = document.getElementById("next");
+  var previous = document.getElementById("previous");
+  var finish = document.getElementById("finish");
+  next.style.display = (state < scenarios.length - 1) ? "inline" : "none";
+  finish.style.display = state == scenarios.length - 1 ? "inline" : "none";
+  previous.style.display = state > 0 ? "inline" : "none";
+}
+
+var setup = function() {
+  var next = document.getElementById("next");
+  var previous = document.getElementById("previous");
+  var finish = document.getElementById("finish");
+  next.addEventListener("click", function() {
+    state++;
+    render();
+  }, true);
+  previous.addEventListener("click", function() {
+    state--;
+    render();
+  }, true);
+  finish.addEventListener("click", function() {
+    //TODO: submit data.
+  }, true);
 }

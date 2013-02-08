@@ -54,15 +54,13 @@ var render = function() {
       var input = document.createElement("input");
       input.type = "checkbox";
       input.title = "Does " + participants[i] + " know " + information[j];
-      input.name = i + "." + j;
+      input.id = i + "." + j;
+      input.checked = answers[state] && answers[state][j + i * information.length] == "1";
       cell.appendChild(input);
       row.appendChild(cell);
     }
     table.appendChild(row);
   }
-  
-  // Set Table State.
-  // TODO: complete
 
   // Set Button State.
   var next = document.getElementById("next");
@@ -78,14 +76,27 @@ var setup = function() {
   var previous = document.getElementById("previous");
   var finish = document.getElementById("finish");
   next.addEventListener("click", function() {
+    saveState();
     state++;
     render();
   }, true);
   previous.addEventListener("click", function() {
+    saveState();
     state--;
     render();
   }, true);
   finish.addEventListener("click", function() {
+    saveState();
     //TODO: submit data.
   }, true);
+}
+
+var saveState = function() {
+  var resp = "";
+  for (var i = 0; i < information.length; i++) {
+    for (var j = 0; j < participants.length; j++) {
+      resp += document.getElementById(i + "." + j).checked ? "1" : "0";
+    }
+  }
+  answers[state] = resp;
 }

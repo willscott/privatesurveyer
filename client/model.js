@@ -6,7 +6,7 @@ var scenarios = [
   "You visit http://www.emailprovider.com/ through Tor."
 ];
 var participants = [
-  "Example.com",
+  "emailprovider.com",
   "Internet Core",
   "Your ISP",
   "Another user on your network",
@@ -19,14 +19,47 @@ var information = [
   "Your Physical Address",
   "Which browser you use"
 ];
+var state = 0;
+var answers = [];
 
 window.onload = function() {
+  render();
+};
+
+var render = function() {
+  // Set Scenerio.
+  var scenario = document.getElementById("scenario");
+  scenario.innerHTML = scenarios[state];
+  
+  // Render Table.
   var table = document.getElementById("dataTable");
+  table.innerHTML = "";
   var headerRow = document.createElement("tr");
+  var corner = document.createElement("th");
+  headerRow.appendChild(corner);
   for (var i = 0; i < participants.length; i++) {
     var cell = document.createElement("th");
-    cell.innerText = participants[i];
-    tableRow.addChild(cell);
+    cell.innerHTML = participants[i];
+    headerRow.appendChild(cell);
   }
-  table.addChild(headerRow)
-};
+  table.appendChild(headerRow);
+  for (var j = 0; j < information.length; j++) {
+    var row = document.createElement("tr");
+    var label = document.createElement("th");
+    label.innerHTML = information[j];
+    row.appendChild(label);
+    for (var i = 0; i < participants.length; i++) {
+      var cell = document.createElement("td");
+      var input = document.createElement("input");
+      input.type = "checkbox";
+      input.title = "Does " + participants[i] + " know " + information[j];
+      input.name = i + "." + j;
+      cell.appendChild(input);
+      row.appendChild(cell);
+    }
+    table.appendChild(row);
+  }
+  
+  // Set Table State.
+  // TODO: complete
+}

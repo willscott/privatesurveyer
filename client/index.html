@@ -17,6 +17,15 @@
         Scenario:<span id="scenario"></span>
         <table id="dataTable" border="1">
         </table>
+        <div id="captcha"></div>
+        <div id="attestation">
+          Please type the following sentence to attest that you are human.
+          <blockquote>
+            I promise that this is my first time completing this survey.
+          </blockquote>
+          <textarea id="attestationText"></textarea>
+          <input type="hidden" name="attestationKeys" id="attestationKeys" />
+        </div>
         <div><br/></div>
 		<button class="btn btn-large" id="previous" type="button">
           Previous

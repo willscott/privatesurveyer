@@ -51,3 +51,15 @@ th {
 td {
   text-align: center;
 }
+
+blockquote {
+  border-top: 5px solid #eee;
+  padding: 5px;
+  margin-top: 1em;
+}
+#attestationText {
+  width: 100%;
+}
+#attestation {
+  display:none;
+}

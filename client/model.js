@@ -30,6 +30,7 @@ var correct_answers = [];
   correct_answers[3] = "0000000000000000000000000";
   correct_answers[4] = "0000000000000000000000000";
 }
+var last = new Date();
 
 window.onload = function() {
   render();
@@ -37,12 +38,22 @@ window.onload = function() {
 };
 
 var render = function() {
-  // Set Scenerio.
   var scenario = document.getElementById("scenario");
+  var table = document.getElementById("dataTable");
+
+  if (typeof scenarios[state] === 'function') {
+    scenario.style.display = 'none';
+    table.style.display = 'none';
+    scenarios[state](true);
+  } else {
+    scenario.style.display = 'block';
+    table.style.display = 'block';
+  }
+
+  // Set Scenerio.
   scenario.innerHTML = scenarios[state];
   
   // Render Table.
-  var table = document.getElementById("dataTable");
   table.innerHTML = "";
   var headerRow = document.createElement("tr");
   var corner = document.createElement("th");
@@ -99,10 +110,23 @@ var setup = function() {
     state--;
     render();
   }, true);
+  var logger = document.getElementById("attestationKeys");
   finish.addEventListener("click", function() {
     saveState();
+    console.log(logger.value);
     //TODO: submit data.
   }, true);
+  var attester = document.getElementById("attestationText");
+  attester.addEventListener('keydown', function(e) {
+    var dif = new Date() - last;
+    logger.value += "d" + e.keyCode + "." + dif;
+    last = new Date();
+  });
+  attester.addEventListener('keyup', function(e) {
+    var dif = new Date() - last;
+    logger.value += "u" + e.keyCode + "." + dif;
+    last = new Date();
+  });
 }
 
 var saveState = function() {
@@ -115,3 +139,15 @@ var saveState = function() {
   answers[state] = resp;
   console.log(state + ":" + answers[state]);
 }
+
+var humanness = function(show) {
+  // Captcha.
+  // Attestation.
+  document.getElementById('attestation').style.display = show ? 'block' : 'none';
+  if (!show) {
+    document.getElementById("attestationText").value = "";
+    document.getElementById("attestationKeys").value = "";
+    return;
+  }
+}
+scenarios.push(humanness);

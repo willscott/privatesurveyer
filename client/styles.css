@@ -6,7 +6,7 @@ body {
 
 .form {
   max-width: 500px;
-  padding: 19px 29px 29px;
+  padding: 19px 29px 59px;
   margin: 0 auto 20px;
   background-color: #fff;
   border: 1px solid #e5e5e5;
@@ -27,4 +27,27 @@ body {
   height: auto;
   margin-bottom: 15px;
   padding: 7px 9px;
+}
+
+#scenario {
+  display:block;
+  font-size: 1.1em;
+  margin-left: 2em;
+  margin-bottom: 0.5em;
+}
+
+#next, #finish {
+  float: right;
+}
+
+#previous {
+  float: left;
+}
+
+th {
+  overflow:hidden;
+}
+
+td {
+  text-align: center;
 }

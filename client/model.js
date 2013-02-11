@@ -50,8 +50,7 @@ var render = function() {
   headerRow.appendChild(corner);
   for (var i = 0; i < participants.length; i++) {
     var cell = document.createElement("th");
-	cell.width = "16%";
-	cell.style = "overflow:hidden;"; //word-break:break-all; 
+    cell.width = "16%";
     cell.innerHTML = participants[i];
     headerRow.appendChild(cell);
   }
@@ -63,7 +62,6 @@ var render = function() {
     row.appendChild(label);
     for (var i = 0; i < participants.length; i++) {
       var cell = document.createElement("td");
-	  cell.align = "center";
       var input = document.createElement("input");
       input.type = "checkbox";
       input.title = "Does " + participants[i] + " know " + information[j];

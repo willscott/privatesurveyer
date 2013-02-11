@@ -62,12 +62,15 @@ var render = function() {
     row.appendChild(label);
     for (var i = 0; i < participants.length; i++) {
       var cell = document.createElement("td");
+      var label = document.createElement("label");
+      label.setAttribute('for', i + "." + j);
       var input = document.createElement("input");
       input.type = "checkbox";
       input.title = "Does " + participants[i] + " know " + information[j];
       input.id = i + "." + j;
       input.checked = answers[state] && answers[state][j + i * information.length] == "1";
-      cell.appendChild(input);
+      label.appendChild(input);
+      cell.appendChild(label);
       row.appendChild(cell);
     }
     table.appendChild(row);

@@ -21,6 +21,15 @@ var information = [
 ];
 var state = 0;
 var answers = [];
+var correct_answers = [];
+
+{
+  correct_answers[0] = "0000000000000000000000000";
+  correct_answers[1] = "0000000000000000000000000";
+  correct_answers[2] = "0000000000000000000000000";
+  correct_answers[3] = "0000000000000000000000000";
+  correct_answers[4] = "0000000000000000000000000";
+}
 
 window.onload = function() {
   render();
@@ -37,9 +46,12 @@ var render = function() {
   table.innerHTML = "";
   var headerRow = document.createElement("tr");
   var corner = document.createElement("th");
+  corner.width = "20%";
   headerRow.appendChild(corner);
   for (var i = 0; i < participants.length; i++) {
     var cell = document.createElement("th");
+	cell.width = "16%";
+	cell.style = "overflow:hidden;"; //word-break:break-all; 
     cell.innerHTML = participants[i];
     headerRow.appendChild(cell);
   }
@@ -51,6 +63,7 @@ var render = function() {
     row.appendChild(label);
     for (var i = 0; i < participants.length; i++) {
       var cell = document.createElement("td");
+	  cell.align = "center";
       var input = document.createElement("input");
       input.type = "checkbox";
       input.title = "Does " + participants[i] + " know " + information[j];
@@ -99,4 +112,5 @@ var saveState = function() {
     }
   }
   answers[state] = resp;
+  console.log(state + ":" + answers[state]);
 }

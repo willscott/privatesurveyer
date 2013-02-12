@@ -7,7 +7,7 @@ var scenarios = [
 ];
 var participants = [
   "emailprovider.com",
-  "Internet Core",
+  "Their ISP",
   "Your ISP",
   "Another user on your network",
   "Your Computer"
@@ -24,11 +24,11 @@ var answers = [];
 var finished = false;
 var correct_answers = [];
 
-correct_answers[0] = "1111111111111110000111111";
-correct_answers[1] = "1111110001100010000110001";
-correct_answers[2] = "1111111111111110000111111";
-correct_answers[3] = "0111111111111110000111111";
-correct_answers[4] = "0011110001100010000110001";
+correct_answers[0] = "1110111101111111111111111";
+correct_answers[1] = "1110110000100101001011111";
+correct_answers[2] = "1110111101111111111111111";
+correct_answers[3] = "0110101101111111111111111";
+correct_answers[4] = "0110101101100101001011111";
 
 var last = new Date();
 
@@ -92,7 +92,7 @@ var render = function() {
     row.appendChild(label);
     for (var i = 0; i < participants.length; i++) {
       var cell = document.createElement("td");
-      if (finished && correct_answers[state][j + i * information.length]) {
+      if (finished && correct_answers[state][j + i * information.length] == "1") {
         cell.className = "seen";
       }
       var label = document.createElement("label");

@@ -44,6 +44,14 @@ body {
   float: left;
 }
 
+#score {
+  display:block;
+  font-size: 30px;
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
+
 th {
   overflow:hidden;
 }

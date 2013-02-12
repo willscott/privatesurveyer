@@ -12,9 +12,12 @@
     <div class="container">
       <form class="form">
         <h2 class="form-heading">Internet Safety</h2>
-
         <img src="img/net.png" />
-        Scenario:<span id="scenario"></span>
+	  </form>
+	</div>
+	<div class="container">
+	  <form id="questionform" class="form" style>
+		<b>Scenario:</b><span id="scenario"></span>
         <table id="dataTable" border="1">
         </table>
         <div id="captcha"></div>
@@ -37,6 +40,12 @@
           Finish
         </button>
       </form>
+	  <form id="scoreform" class="form" style="display:none">
+	    <h3>Score:</h3>
+	  </form>
+	  <form id="answerform" class="form" style="display:none">
+	    <h3>Answers:</h3>
+	  </form>
     </div>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>

@@ -3,7 +3,7 @@ var scenarios = [
   "You visit <font color='green'>https</font>://www.emailprovider.com/.",
   "You visit http://www.emailprovider.com/ from the free wifi network at a coffee shop.",
   "You visit http://www.emailprovider.com/ using a free HTTP proxy you found online.",
-  "You visit http://www.emailprovider.com/ through Tor."
+  "You visit http://www.emailprovider.com/ through Tor.",
 ];
 var participants = [
   "emailprovider.com",
@@ -21,23 +21,23 @@ var information = [
 ];
 var state = 0;
 var answers = [];
-var correct_answers = [];
-
+var correctAnswers = [];
 {
-  correct_answers[0] = "0000000000000000000000000";
-  correct_answers[1] = "0000000000000000000000000";
-  correct_answers[2] = "0000000000000000000000000";
-  correct_answers[3] = "0000000000000000000000000";
-  correct_answers[4] = "0000000000000000000000000";
+  correctAnswers[0] = "0000000000000000000000000";
+  correctAnswers[1] = "0000000000000000000000000";
+  correctAnswers[2] = "0000000000000000000000000";
+  correctAnswers[3] = "0000000000000000000000000";
+  correctAnswers[4] = "0000000000000000000000000";
 }
 var last = new Date();
+var isFinished = false;
 
 window.onload = function() {
-  render();
+  renderQuestion();
   setup();
 };
 
-var render = function() {
+var renderQuestion = function() {
   var scenario = document.getElementById("scenario");
   var table = document.getElementById("dataTable");
 
@@ -48,6 +48,7 @@ var render = function() {
   } else {
     scenario.style.display = 'block';
     table.style.display = 'block';
+	scenarios[scenarios.length - 1](false);
   }
 
   // Set Scenerio.
@@ -103,18 +104,21 @@ var setup = function() {
   next.addEventListener("click", function() {
     saveState();
     state++;
-    render();
+    renderQuestion();
   }, true);
   previous.addEventListener("click", function() {
-    saveState();
+	if (state < scenarios.length - 1)
+	    saveState();
     state--;
-    render();
+    renderQuestion();
   }, true);
   var logger = document.getElementById("attestationKeys");
   finish.addEventListener("click", function() {
-    saveState();
+    //saveState();
     console.log(logger.value);
-    //TODO: submit data.
+	submitAnswer();
+	isFinished = true;
+	renderAnswer();
   }, true);
   var attester = document.getElementById("attestationText");
   attester.addEventListener('keydown', function(e) {
@@ -129,6 +133,55 @@ var setup = function() {
   });
 }
 
+var renderAnswer = function() {
+  var questionForm = document.getElementById("questionform");
+  questionForm.style.display = 'none';
+  var scoreForm = document.getElementById("scoreform");
+  var answerForm = document.getElementById("answerform");
+
+  var score = 0;
+
+  for (var state = 0; state < scenarios.length - 1; state++) {
+	answerForm.innerHTML += '<b>Scenario:</b>';
+	answerForm.innerHTML += '<span id="scenario" style="display:block;">' + scenarios[state] + '</span>';
+
+	var table = '<table border="1" style="display: block;">';
+	table += '<tr><th width="20%"></th>';
+    for (var i = 0; i < participants.length; i++) {
+      table += '<th width="16%">' + participants[i] + '</th>';
+    }
+
+    for (var j = 0; j < information.length; j++) {
+      table += '<tr><th>' + information[j] + '</th>';
+      for (var i = 0; i < participants.length; i++) {
+		var text;
+		if (correctAnswers[state][j + i * information.length] == '1')
+			text = 'Yes';
+		else
+			text = 'No';
+		if (correctAnswers[state][j + i * information.length] == answers[state][j + i * information.length]) {
+			score += 1;
+			text = '<font color="green">' + text + '</font>';
+		} else {
+			text = '<font color="red">' + text + '</font>';
+		}
+		table += '<td>' + text + '</td>';
+      }
+	  table += '</tr>';
+    }
+	
+	table += '</table>';
+	answerForm.innerHTML += table + '<br/>';
+  }
+
+  var fullScore = (scenarios.length - 1) * information.length * participants.length;
+  scoreForm.innerHTML += '<div id="score">' + score + "/" + fullScore + '</div>';
+
+  scoreForm.style.display = '';
+  answerForm.style.display = '';
+}
+ 
+
 var saveState = function() {
   var resp = "";
   for (var i = 0; i < information.length; i++) {
@@ -138,6 +191,10 @@ var saveState = function() {
   }
   answers[state] = resp;
   console.log(state + ":" + answers[state]);
+}
+
+var submitAnswer = function() {
+    //TODO: submit data. 
 }
 
 var humanness = function(show) {

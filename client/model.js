@@ -37,17 +37,25 @@ window.onload = function() {
   setup();
 };
 
+var reset = function() {
+  humanness(false);
+}
+
 var render = function() {
   var scenario = document.getElementById("scenario");
+  var sl = document.getElementById("sl");
   var table = document.getElementById("dataTable");
 
   if (typeof scenarios[state] === 'function') {
     scenario.style.display = 'none';
     table.style.display = 'none';
+    sl.style.display = 'none';
     scenarios[state](true);
   } else {
+    reset();
     scenario.style.display = 'block';
     table.style.display = 'block';
+    sl.style.display = 'inline';
   }
 
   // Set Scenerio.
@@ -141,7 +149,6 @@ var saveState = function() {
 }
 
 var humanness = function(show) {
-  // Captcha.
   // Attestation.
   document.getElementById('attestation').style.display = show ? 'block' : 'none';
   if (!show) {

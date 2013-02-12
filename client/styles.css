@@ -61,5 +61,6 @@ blockquote {
   width: 100%;
 }
 #attestation {
+  margin-top: 3em;
   display:none;
 }

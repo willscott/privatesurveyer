@@ -59,6 +59,9 @@ th {
 td {
   text-align: center;
 }
+td.seen {
+  background-color: green;
+}
 
 blockquote {
   border-top: 5px solid #eee;
@@ -69,5 +72,6 @@ blockquote {
   width: 100%;
 }
 #attestation {
+  margin-top: 3em;
   display:none;
 }

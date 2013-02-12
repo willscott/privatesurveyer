@@ -7,7 +7,7 @@ var scenarios = [
 ];
 var participants = [
   "emailprovider.com",
-  "Internet Core",
+  "Their ISP",
   "Your ISP",
   "Another user on your network",
   "Your Computer"
@@ -21,34 +21,51 @@ var information = [
 ];
 var state = 0;
 var answers = [];
+var finished = false;
 var correctAnswers = [];
-{
-  correctAnswers[0] = "0000000000000000000000000";
-  correctAnswers[1] = "0000000000000000000000000";
-  correctAnswers[2] = "0000000000000000000000000";
-  correctAnswers[3] = "0000000000000000000000000";
-  correctAnswers[4] = "0000000000000000000000000";
-}
+correctAnswers[0] = "1110111101111111111111111";
+correctAnswers[1] = "1110110000100101001011111";
+correctAnswers[2] = "1110111101111111111111111";
+correctAnswers[3] = "0110101101111111111111111";
+correctAnswers[4] = "0110101101100101001011111";
+
 var last = new Date();
-var isFinished = false;
 
 window.onload = function() {
   renderQuestion();
   setup();
 };
 
+var humanness = function(show) {
+  // Attestation.
+  document.getElementById('attestation').style.display = show ? 'block' : 'none';
+  if (!show) {
+    document.getElementById("attestationText").value = "";
+    document.getElementById("attestationKeys").value = "";
+    return;
+  }
+}
+scenarios.push(humanness);
+
+var reset = function() {
+  humanness(false);
+}
+
 var renderQuestion = function() {
   var scenario = document.getElementById("scenario");
+  var sl = document.getElementById("sl");
   var table = document.getElementById("dataTable");
 
   if (typeof scenarios[state] === 'function') {
     scenario.style.display = 'none';
     table.style.display = 'none';
+    sl.style.display = 'none';
     scenarios[state](true);
   } else {
+    reset();
     scenario.style.display = 'block';
     table.style.display = 'block';
-	scenarios[scenarios.length - 1](false);
+    sl.style.display = 'inline';
   }
 
   // Set Scenerio.
@@ -74,6 +91,9 @@ var renderQuestion = function() {
     row.appendChild(label);
     for (var i = 0; i < participants.length; i++) {
       var cell = document.createElement("td");
+      if (finished && correct_answers[state][j + i * information.length] == "1") {
+        cell.className = "seen";
+      }
       var label = document.createElement("label");
       label.setAttribute('for', i + "." + j);
       var input = document.createElement("input");
@@ -116,9 +136,11 @@ var setup = function() {
   finish.addEventListener("click", function() {
     //saveState();
     console.log(logger.value);
+    finished = true;
+    state = 0;
+    renderAnswer();
 	submitAnswer();
-	isFinished = true;
-	renderAnswer();
+    //TODO: submit data.
   }, true);
   var attester = document.getElementById("attestationText");
   attester.addEventListener('keydown', function(e) {
@@ -197,14 +219,3 @@ var submitAnswer = function() {
     //TODO: submit data. 
 }
 
-var humanness = function(show) {
-  // Captcha.
-  // Attestation.
-  document.getElementById('attestation').style.display = show ? 'block' : 'none';
-  if (!show) {
-    document.getElementById("attestationText").value = "";
-    document.getElementById("attestationKeys").value = "";
-    return;
-  }
-}
-scenarios.push(humanness);

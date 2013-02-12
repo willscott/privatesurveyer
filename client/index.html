@@ -17,12 +17,12 @@
 	</div>
 	<div class="container">
 	  <form id="questionform" class="form" style>
-		<b>Scenario:</b><span id="scenario"></span>
+        <span id="sl">Scenario:</span><span id="scenario"></span>
         <table id="dataTable" border="1">
         </table>
         <div id="captcha"></div>
         <div id="attestation">
-          Please type the following sentence to attest that you are human.
+          Please type the following sentence to attest that you are human:
           <blockquote>
             I promise that this is my first time completing this survey.
           </blockquote>
@@ -30,7 +30,7 @@
           <input type="hidden" name="attestationKeys" id="attestationKeys" />
         </div>
         <div><br/></div>
-		<button class="btn btn-large" id="previous" type="button">
+        <button class="btn btn-large" id="previous" type="button">
           Previous
         </button>
         <button class="btn btn-large btn-primary" id="next" type="button">
@@ -47,7 +47,7 @@
 	    <h3>Answers:</h3>
 	  </form>
     </div>
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="bootstrap/js/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

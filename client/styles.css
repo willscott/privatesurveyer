@@ -51,6 +51,9 @@ th {
 td {
   text-align: center;
 }
+td.seen {
+  background-color: green;
+}
 
 blockquote {
   border-top: 5px solid #eee;

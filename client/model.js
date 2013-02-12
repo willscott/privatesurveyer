@@ -21,21 +21,32 @@ var information = [
 ];
 var state = 0;
 var answers = [];
+var finished = false;
 var correct_answers = [];
 
-{
-  correct_answers[0] = "0000000000000000000000000";
-  correct_answers[1] = "0000000000000000000000000";
-  correct_answers[2] = "0000000000000000000000000";
-  correct_answers[3] = "0000000000000000000000000";
-  correct_answers[4] = "0000000000000000000000000";
-}
+correct_answers[0] = "1111111111111110000111111";
+correct_answers[1] = "1111110001100010000110001";
+correct_answers[2] = "1111111111111110000111111";
+correct_answers[3] = "0111111111111110000111111";
+correct_answers[4] = "0011110001100010000110001";
+
 var last = new Date();
 
 window.onload = function() {
   render();
   setup();
 };
+
+var humanness = function(show) {
+  // Attestation.
+  document.getElementById('attestation').style.display = show ? 'block' : 'none';
+  if (!show) {
+    document.getElementById("attestationText").value = "";
+    document.getElementById("attestationKeys").value = "";
+    return;
+  }
+}
+scenarios.push(humanness);
 
 var reset = function() {
   humanness(false);
@@ -81,6 +92,9 @@ var render = function() {
     row.appendChild(label);
     for (var i = 0; i < participants.length; i++) {
       var cell = document.createElement("td");
+      if (finished && correct_answers[state][j + i * information.length]) {
+        cell.className = "seen";
+      }
       var label = document.createElement("label");
       label.setAttribute('for', i + "." + j);
       var input = document.createElement("input");
@@ -122,6 +136,9 @@ var setup = function() {
   finish.addEventListener("click", function() {
     saveState();
     console.log(logger.value);
+    finished = true;
+    state = 0;
+    render();
     //TODO: submit data.
   }, true);
   var attester = document.getElementById("attestationText");
@@ -147,14 +164,3 @@ var saveState = function() {
   answers[state] = resp;
   console.log(state + ":" + answers[state]);
 }
-
-var humanness = function(show) {
-  // Attestation.
-  document.getElementById('attestation').style.display = show ? 'block' : 'none';
-  if (!show) {
-    document.getElementById("attestationText").value = "";
-    document.getElementById("attestationKeys").value = "";
-    return;
-  }
-}
-scenarios.push(humanness);

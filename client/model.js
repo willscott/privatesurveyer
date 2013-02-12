@@ -3,7 +3,7 @@ var scenarios = [
   "You visit <font color='green'>https</font>://www.emailprovider.com/.",
   "You visit http://www.emailprovider.com/ from the free wifi network at a coffee shop.",
   "You visit http://www.emailprovider.com/ using a free HTTP proxy you found online.",
-  "You visit http://www.emailprovider.com/ through Tor."
+  "You visit http://www.emailprovider.com/ through Tor.",
 ];
 var participants = [
   "emailprovider.com",
@@ -22,18 +22,17 @@ var information = [
 var state = 0;
 var answers = [];
 var finished = false;
-var correct_answers = [];
-
-correct_answers[0] = "1110111101111111111111111";
-correct_answers[1] = "1110110000100101001011111";
-correct_answers[2] = "1110111101111111111111111";
-correct_answers[3] = "0110101101111111111111111";
-correct_answers[4] = "0110101101100101001011111";
+var correctAnswers = [];
+correctAnswers[0] = "1110111101111111111111111";
+correctAnswers[1] = "1110110000100101001011111";
+correctAnswers[2] = "1110111101111111111111111";
+correctAnswers[3] = "0110101101111111111111111";
+correctAnswers[4] = "0110101101100101001011111";
 
 var last = new Date();
 
 window.onload = function() {
-  render();
+  renderQuestion();
   setup();
 };
 
@@ -52,7 +51,7 @@ var reset = function() {
   humanness(false);
 }
 
-var render = function() {
+var renderQuestion = function() {
   var scenario = document.getElementById("scenario");
   var sl = document.getElementById("sl");
   var table = document.getElementById("dataTable");
@@ -127,21 +126,20 @@ var setup = function() {
   next.addEventListener("click", function() {
     saveState();
     state++;
-    render();
+    renderQuestion();
   }, true);
   previous.addEventListener("click", function() {
-    saveState();
+	if (state < scenarios.length - 1)
+	    saveState();
     state--;
-    render();
+    renderQuestion();
   }, true);
   var logger = document.getElementById("attestationKeys");
   finish.addEventListener("click", function() {
-    saveState();
-    console.log(logger.value);
     finished = true;
     state = 0;
-    render();
-    //TODO: submit data.
+    renderAnswer();
+  	submitAnswer();
   }, true);
   var attester = document.getElementById("attestationText");
   attester.addEventListener('keydown', function(e) {
@@ -153,7 +151,11 @@ var setup = function() {
     var dif = new Date() - last;
     logger.value += "u" + e.keyCode + "." + dif;
     last = new Date();
-    finish.setAttribute('disabled', attested());
+    if (!attested()) {
+      finish.setAttribute('disabled', true);      
+    } else {
+      finish.removeAttribute('disabled');
+    }
   });
 }
 
@@ -167,21 +169,67 @@ var attested = function() {
   return false;
 }
 
-var submit = function() {
-  if (state == scenarios.length - 1 && attested())) {
+var submitAnswer = function() {
+  if (attested()) {
     var script = "https://script.google.com/macros/s/AKfycby6l_G7SXo3Gq8Z7r1Kj996U2Oea2oc548pUvdSii05wuTnPiHS/exec";
     var answer = answers[0] + answers[1] + answers[2] + answers[3] + answers[4];
-    var attestaton = document.getElementById("attestationKeys").value;
+    var atk = document.getElementById("attestationKeys").value;
     var s = document.createElement("script");
-    s.src = script + "?a=" + answer + "&h=" + attestation;
+    s.src = script + "?a=" + answer + "&h=" + atk;
     document.body.appendChild(s);
   }
 }
 
 var callback = function(result) {
-  if (result && result.success) {
-    
+  // We don't actually care.
+}
+
+var renderAnswer = function() {
+  var questionForm = document.getElementById("questionform");
+  questionForm.style.display = 'none';
+  var scoreForm = document.getElementById("scoreform");
+  var answerForm = document.getElementById("answerform");
+
+  var score = 0;
+
+  for (var state = 0; state < scenarios.length - 1; state++) {
+	answerForm.innerHTML += '<b>Scenario:</b>';
+	answerForm.innerHTML += '<span id="scenario" style="display:block;">' + scenarios[state] + '</span>';
+
+	var table = '<table border="1" style="display: block;">';
+	table += '<tr><th width="20%"></th>';
+    for (var i = 0; i < participants.length; i++) {
+      table += '<th width="16%">' + participants[i] + '</th>';
+    }
+
+    for (var j = 0; j < information.length; j++) {
+      table += '<tr><th>' + information[j] + '</th>';
+      for (var i = 0; i < participants.length; i++) {
+		var text;
+		if (correctAnswers[state][j + i * information.length] == '1')
+			text = 'Yes';
+		else
+			text = 'No';
+		if (correctAnswers[state][j + i * information.length] == answers[state][j + i * information.length]) {
+			score += 1;
+			text = '<font color="green">' + text + '</font>';
+		} else {
+			text = '<font color="red">' + text + '</font>';
+		}
+		table += '<td>' + text + '</td>';
+      }
+	  table += '</tr>';
+    }
+	
+	table += '</table>';
+	answerForm.innerHTML += table + '<br/>';
   }
+
+  var fullScore = (scenarios.length - 1) * information.length * participants.length;
+  scoreForm.innerHTML += '<div id="score">' + score + "/" + fullScore + '</div>';
+
+  scoreForm.style.display = '';
+  answerForm.style.display = '';
 }
 
 var saveState = function() {

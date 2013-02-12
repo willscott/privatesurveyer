@@ -113,7 +113,8 @@ var render = function() {
   var next = document.getElementById("next");
   var previous = document.getElementById("previous");
   var finish = document.getElementById("finish");
-  next.style.display = (state < scenarios.length - 1) ? "inline" : "none";
+  next.style.display = (state < scenarios.length - 1 &&
+      (!finished || typeof scenarios[state + 1] !== 'function')) ? "inline" : "none";
   finish.style.display = state == scenarios.length - 1 ? "inline" : "none";
   previous.style.display = state > 0 ? "inline" : "none";
 }

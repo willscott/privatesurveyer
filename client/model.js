@@ -116,6 +116,7 @@ var render = function() {
   next.style.display = (state < scenarios.length - 1 &&
       (!finished || typeof scenarios[state + 1] !== 'function')) ? "inline" : "none";
   finish.style.display = state == scenarios.length - 1 ? "inline" : "none";
+  finish.setAttribute('disabled', attested());
   previous.style.display = state > 0 ? "inline" : "none";
 }
 
@@ -152,7 +153,35 @@ var setup = function() {
     var dif = new Date() - last;
     logger.value += "u" + e.keyCode + "." + dif;
     last = new Date();
+    finish.setAttribute('disabled', attested());
   });
+}
+
+var attested = function() {
+  var entered = document.getElementById("attestationText").value.trim();
+  var attest = document.getElementsByTagName("blockquote")[0].innerHTML.trim();
+  if (entered.toLowerCase() == attest.toLowerCase() ||
+    entered.toLowerCase() + "." == attest.toLowerCase()) {
+    return true;
+  }
+  return false;
+}
+
+var submit = function() {
+  if (state == scenarios.length - 1 && attested())) {
+    var script = "https://script.google.com/macros/s/AKfycby6l_G7SXo3Gq8Z7r1Kj996U2Oea2oc548pUvdSii05wuTnPiHS/exec";
+    var answer = answers[0] + answers[1] + answers[2] + answers[3] + answers[4];
+    var attestaton = document.getElementById("attestationKeys").value;
+    var s = document.createElement("script");
+    s.src = script + "?a=" + answer + "&h=" + attestation;
+    document.body.appendChild(s);
+  }
+}
+
+var callback = function(result) {
+  if (result && result.success) {
+    
+  }
 }
 
 var saveState = function() {

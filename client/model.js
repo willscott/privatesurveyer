@@ -1,9 +1,9 @@
 var scenarios = [
-  "You visit http://www.emailprovider.com/.",
-  "You visit <font color='green'>https</font>://www.emailprovider.com/.",
-  "You visit http://www.emailprovider.com/ from the free wifi network at a coffee shop.",
-  "You visit http://www.emailprovider.com/ using a free HTTP proxy you found online.",
-  "You visit http://www.emailprovider.com/ through Tor.",
+  "You visit http://www.emailprovider.com/, Log in, and send an email.",
+  "You visit <font color='green'>https</font>://www.emailprovider.com/ using SSL. You Log in, and send an email.",
+  "You visit http://www.emailprovider.com/ from the free wifi network at a coffee shop.  You log in, and send an email.",
+  "You visit http://www.emailprovider.com/ using a free HTTP proxy you found online. You log in, and send an email.",
+  "You visit http://www.emailprovider.com/ using Tor. You log in, and send an email. (If you do not recognize 'Tor', leave these boxes blank.)",
 ];
 var participants = [
   "emailprovider.com",

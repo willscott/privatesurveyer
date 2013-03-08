@@ -1,23 +1,22 @@
 var scenarios = [
-  "You visit http://www.emailprovider.com/, Log in, and send an email.",
-  "You visit <font color='green'>https</font>://www.emailprovider.com/ using SSL. You Log in, and send an email.",
-  "You visit http://www.emailprovider.com/ from the free wifi network at a coffee shop.  You log in, and send an email.",
-  "You visit http://www.emailprovider.com/ using a free HTTP proxy you found online. You log in, and send an email.",
-  "You visit http://www.emailprovider.com/ using Tor. You log in, and send an email. (If you do not recognize 'Tor', leave these boxes blank.)",
+  "You visit http://emailprovider.com, sign in, and check your inbox.",
+  "You visit <font color='#4d8'>https</font>://emailprovider.com, sign in, and check your inbox.",
+  "You visit http://emailprovider.com from the free wifi network at a nearby coffee shop.  You sign in, and check your inbox.",
+  "You visit http://emailprovider.com using a free HTTP proxy you found online. You sign in, and check your inbox.",
+  "You visit http://emailprovider.com using Tor. You sign in, and check your inbox. (If you do not recognize 'Tor', leave these boxes blank.)",
 ];
 var participants = [
   "emailprovider.com",
-  "Their ISP",
+  "emailprovider.com's ISP",
   "Your ISP",
-  "Another user on your network",
+  "A computer on your network",
   "Your Computer"
 ];
 var information = [
   "Your IP address",
   "Your Email Address",
-  "The Email you wrote",
-  "Your Physical Address",
-  "Which browser you use"
+  "Your Email Password",
+  "Your OS & Browser"
 ];
 var state = 0;
 var answers = [];

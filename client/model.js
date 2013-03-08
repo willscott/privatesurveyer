@@ -4,16 +4,17 @@ var scenarios = [
   "You visit http://emailprovider.com from the free wifi network at a nearby coffee shop.  You sign in, and check your inbox.",
   "You visit http://emailprovider.com using a free HTTP proxy you found online. You sign in, and check your inbox.",
   "You visit http://emailprovider.com using Tor. You sign in, and check your inbox. (If you do not recognize 'Tor', leave these boxes blank.)",
+  "You visit emailprovider.com in an ideal world. (There's no right answer to this question.)"
 ];
 var participants = [
   "emailprovider.com",
   "emailprovider.com's ISP",
   "Your ISP",
-  "A computer on your network",
+  "A user on your wireless network",
   "Your Computer"
 ];
 var information = [
-  "Your IP address",
+  "Your Home IP address",
   "Your Email Address",
   "Your Email Password",
   "Your OS & Browser"
@@ -22,11 +23,11 @@ var state = 0;
 var answers = [];
 var finished = false;
 var correctAnswers = [];
-correctAnswers[0] = "1110111101111111111111111";
-correctAnswers[1] = "1110110000100101001011111";
-correctAnswers[2] = "1110111101111111111111111";
-correctAnswers[3] = "0110101101111111111111111";
-correctAnswers[4] = "0110101101100101001011111";
+correctAnswers[0] = "11111111111111111111";
+correctAnswers[1] = "11111100011000110001";
+correctAnswers[2] = "00000111111111111111";
+correctAnswers[3] = "00111111111111111111";
+correctAnswers[4] = "00111110011100111001";
 
 var last = new Date();
 
@@ -53,18 +54,21 @@ var reset = function() {
 var renderQuestion = function() {
   var scenario = document.getElementById("scenario");
   var sl = document.getElementById("sl");
+  var sl2 = document.getElementById("sl2");
   var table = document.getElementById("dataTable");
 
   if (typeof scenarios[state] === 'function') {
     scenario.style.display = 'none';
     table.style.display = 'none';
     sl.style.display = 'none';
+    sl2.style.display = 'none';
     scenarios[state](true);
   } else {
     reset();
     scenario.style.display = 'block';
     table.style.display = 'block';
     sl.style.display = 'inline';
+    sl2.style.display = 'inline';
   }
 
   // Set Scenerio.
@@ -171,7 +175,7 @@ var attested = function() {
 var submitAnswer = function() {
   if (attested()) {
     var script = "https://script.google.com/macros/s/AKfycby6l_G7SXo3Gq8Z7r1Kj996U2Oea2oc548pUvdSii05wuTnPiHS/exec";
-    var answer = answers[0] + answers[1] + answers[2] + answers[3] + answers[4];
+    var answer = answers[0] + answers[1] + answers[2] + answers[3] + answers[4] + answers[5];
     var atk = document.getElementById("attestationKeys").value;
     var s = document.createElement("script");
     s.src = script + "?a=" + answer + "&h=" + atk;
@@ -191,7 +195,7 @@ var renderAnswer = function() {
 
   var score = 0;
 
-  for (var state = 0; state < scenarios.length - 1; state++) {
+  for (var state = 0; state < scenarios.length - 2; state++) {
 	answerForm.innerHTML += '<b>Scenario:</b>';
 	answerForm.innerHTML += '<span id="scenario" style="display:block;">' + scenarios[state] + '</span>';
 
@@ -201,15 +205,15 @@ var renderAnswer = function() {
       table += '<th width="16%">' + participants[i] + '</th>';
     }
 
-    for (var j = 0; j < information.length; j++) {
-      table += '<tr><th>' + information[j] + '</th>';
-      for (var i = 0; i < participants.length; i++) {
+    for (var i = 0; i < information.length; i++) {
+      table += '<tr><th>' + information[i] + '</th>';
+      for (var j = 0; j < participants.length; j++) {
 		var text;
-		if (correctAnswers[state][j + i * information.length] == '1')
+		if (correctAnswers[state][j + i * participants.length] == '1')
 			text = 'Yes';
 		else
 			text = 'No';
-		if (correctAnswers[state][j + i * information.length] == answers[state][j + i * information.length]) {
+		if (correctAnswers[state][j + i * participants.length] == answers[state][j + i * participants.length]) {
 			score += 1;
 			text = '<font color="green">' + text + '</font>';
 		} else {
@@ -224,7 +228,7 @@ var renderAnswer = function() {
 	answerForm.innerHTML += table + '<br/>';
   }
 
-  var fullScore = (scenarios.length - 1) * information.length * participants.length;
+  var fullScore = (scenarios.length - 2) * information.length * participants.length;
   scoreForm.innerHTML += '<div id="score">' + score + "/" + fullScore + '</div>';
 
   scoreForm.style.display = '';
@@ -235,7 +239,7 @@ var saveState = function() {
   var resp = "";
   for (var i = 0; i < information.length; i++) {
     for (var j = 0; j < participants.length; j++) {
-      resp += document.getElementById(i + "." + j).checked ? "1" : "0";
+      resp += document.getElementById(j + "." + i).checked ? "1" : "0";
     }
   }
   answers[state] = resp;

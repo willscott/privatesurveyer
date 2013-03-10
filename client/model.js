@@ -36,19 +36,7 @@ window.onload = function() {
   setup();
 };
 
-var humanness = function(show) {
-  // Attestation.
-  document.getElementById('attestation').style.display = show ? 'block' : 'none';
-  if (!show) {
-    document.getElementById("attestationText").value = "";
-    document.getElementById("attestationKeys").value = "";
-    return;
-  }
-}
-scenarios.push(humanness);
-
 var reset = function() {
-  humanness(false);
 }
 
 var renderQuestion = function() {
@@ -116,9 +104,8 @@ var renderQuestion = function() {
   var previous = document.getElementById("previous");
   var finish = document.getElementById("finish");
   next.style.display = (state < scenarios.length - 1 &&
-      (!finished || typeof scenarios[state + 1] !== 'function')) ? "inline" : "none";
+      !finished) ? "inline" : "none";
   finish.style.display = state == scenarios.length - 1 ? "inline" : "none";
-  finish.setAttribute('disabled', attested());
   previous.style.display = state > 0 ? "inline" : "none";
 }
 
@@ -137,50 +124,21 @@ var setup = function() {
     state--;
     renderQuestion();
   }, true);
-  var logger = document.getElementById("attestationKeys");
   finish.addEventListener("click", function() {
+    saveState()
     finished = true;
     state = 0;
     renderAnswer();
-  	submitAnswer();
+    submitAnswer();
   }, true);
-  var attester = document.getElementById("attestationText");
-  attester.addEventListener('keydown', function(e) {
-    var dif = new Date() - last;
-    logger.value += "d" + e.keyCode + "." + dif;
-    last = new Date();
-  });
-  attester.addEventListener('keyup', function(e) {
-    var dif = new Date() - last;
-    logger.value += "u" + e.keyCode + "." + dif;
-    last = new Date();
-    if (!attested()) {
-      finish.setAttribute('disabled', true);      
-    } else {
-      finish.removeAttribute('disabled');
-    }
-  });
-}
-
-var attested = function() {
-  var entered = document.getElementById("attestationText").value.trim();
-  var attest = document.getElementsByTagName("blockquote")[0].innerHTML.trim();
-  if (entered.toLowerCase() == attest.toLowerCase() ||
-    entered.toLowerCase() + "." == attest.toLowerCase()) {
-    return true;
-  }
-  return false;
 }
 
 var submitAnswer = function() {
-  if (attested()) {
-    var script = "https://script.google.com/macros/s/AKfycby6l_G7SXo3Gq8Z7r1Kj996U2Oea2oc548pUvdSii05wuTnPiHS/exec";
-    var answer = answers[0] + answers[1] + answers[2] + answers[3] + answers[4] + answers[5];
-    var atk = document.getElementById("attestationKeys").value;
-    var s = document.createElement("script");
-    s.src = script + "?a=" + answer + "&h=" + atk;
-    document.body.appendChild(s);
-  }
+  var script = "https://script.google.com/macros/s/AKfycby6l_G7SXo3Gq8Z7r1Kj996U2Oea2oc548pUvdSii05wuTnPiHS/exec";
+  var answer = answers[0] + answers[1] + answers[2] + answers[3] + answers[4] + answers[5];
+  var s = document.createElement("script");
+  s.src = script + "?s=" + window.location.search + "&a=" + answer + "&h=none";
+  document.body.appendChild(s);
 }
 
 var callback = function(result) {
@@ -195,7 +153,7 @@ var renderAnswer = function() {
 
   var score = 0;
 
-  for (var state = 0; state < scenarios.length - 2; state++) {
+  for (var state = 0; state < scenarios.length - 1; state++) {
 	answerForm.innerHTML += '<b>Scenario:</b>';
 	answerForm.innerHTML += '<span id="scenario" style="display:block;">' + scenarios[state] + '</span>';
 
@@ -228,7 +186,7 @@ var renderAnswer = function() {
 	answerForm.innerHTML += table + '<br/>';
   }
 
-  var fullScore = (scenarios.length - 2) * information.length * participants.length;
+  var fullScore = (scenarios.length - 1) * information.length * participants.length;
   scoreForm.innerHTML += '<div id="score">' + score + "/" + fullScore + '</div>';
 
   scoreForm.style.display = '';

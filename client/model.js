@@ -91,7 +91,7 @@ var renderQuestion = function() {
       input.type = "checkbox";
       input.title = "Does " + participants[i] + " know " + information[j];
       input.id = i + "." + j;
-      input.checked = answers[state] && answers[state][j + i * information.length] == "1";
+      input.checked = answers[state] && answers[state][j*participants.length + i] == "1";
       label.appendChild(input);
       cell.appendChild(label);
       row.appendChild(cell);

@@ -5,35 +5,34 @@
 
 using namespace std;
 
-#define BEGIN_OF_DATA		"on Reddit"
-#define END_OF_DATA			"End of first trial"
+#define BEGIN_OF_DATA		"Beginning of second trial"
+#define END_OF_DATA			"End of second trial"
 #define SCENARIO_NUM		5
-#define INFORMATION_NUM		5
+#define INFORMATION_NUM		4
 #define PARTICIPANT_NUM		5
 #define SCENARIO_QUESTION	(PARTICIPANT_NUM * INFORMATION_NUM)
 #define TOTAL_QUESTION		(SCENARIO_NUM * SCENARIO_QUESTION)
 
 const char CORRECT_ANSWER[TOTAL_QUESTION + 1] = 
-	"1110111101111111111111111"\
-	"1110110000100101001011111"\
-	"1110111101111111111111111"\
-	"0110101101111111111111111"\
-	"0110101101100101001011111";
+	"11111111111111111111"\
+	"11111100011000110001"\
+	"00000111111111111111"\
+	"00111111111111111111"\
+	"00111110011100111001";
 
 const char Scenarios[SCENARIO_NUM][200] = {
 	"You visit http://emailprovider.com",
-	"You visit https://www.emailprovider.com/ using SSL",
+	"You visit https://www.emailprovider.com/",
 	"You visit http://www.emailprovider.com/ from the free wifi network at a coffee shop",
 	"You visit http://www.emailprovider.com/ using a free HTTP proxy you found online",
 	"You visit http://www.emailprovider.com/ using Tor"
 };
 
 const char Information[INFORMATION_NUM][200] = {
-	"Your IP address",
+	"Your Home IP address",
 	"Your Email Address",
-	"The Email you wrote",
-	"Your Physical Address",
-	"Which browser you use"
+	"Your Email Password",
+	"Your OS & Browser"
 };
 
 const char Participants[PARTICIPANT_NUM][200] = {
@@ -51,7 +50,7 @@ struct Answer {
 };
 
 //vector<Answer*> answer_list;
-int ratio[SCENARIO_NUM + 1][PARTICIPANT_NUM + 1][INFORMATION_NUM + 1];
+int ratio[SCENARIO_NUM + 1][INFORMATION_NUM + 1][PARTICIPANT_NUM + 1];
 int scores[100];
 int n = 0;
 
@@ -91,7 +90,7 @@ void update_score_ratio(Answer *answer)
 	for (int i = 0; i < TOTAL_QUESTION; i++) {
 		if (answer->key[i] == CORRECT_ANSWER[i]) {
 			++ s;
-			++ ratio[i / SCENARIO_QUESTION][(i % SCENARIO_QUESTION) % INFORMATION_NUM][(i % SCENARIO_QUESTION) / INFORMATION_NUM];
+			++ ratio[i / SCENARIO_QUESTION][(i % SCENARIO_QUESTION) / PARTICIPANT_NUM][(i % SCENARIO_QUESTION) % PARTICIPANT_NUM];
 		}
 	}
 	scores[n++] = s;
@@ -211,10 +210,14 @@ int main(int argc, const char **argv)
 			
 			for (int k = 0; k < PARTICIPANT_NUM; k++) {
 				printf("<td>");
-				if (CORRECT_ANSWER[i * SCENARIO_QUESTION + k + j * PARTICIPANT_NUM] == '1')
-					printf("%2d / <font color='red'>%2d</font>", ratio[i][j][k], n - ratio[i][j][k]);
-				else
-					printf("%2d / <font color='green'>%2d</font>", ratio[i][j][k], n - ratio[i][j][k]);
+				if (n - ratio[i][j][k] == 0)
+					printf("%2d / 0", ratio[i][j][k]);
+				else {
+					if (CORRECT_ANSWER[i * SCENARIO_QUESTION + k + j * PARTICIPANT_NUM] == '1')
+						printf("%2d / <font color='red'>%2d</font>", ratio[i][j][k], n - ratio[i][j][k]);
+					else
+						printf("%2d / <font color='green'>%2d</font>", ratio[i][j][k], n - ratio[i][j][k]);
+				}
 				printf("</td>\n");
 			}
 			printf("</tr>\n");

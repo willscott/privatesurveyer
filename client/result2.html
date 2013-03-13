@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Data Privacy</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <form class="form">
+        <h2 class="form-heading">Online Data Privacy</h2>
+        <img src="img/net.png" />
+	  </form>
+	</div>
+	<div class="container">
+	  <form id="resultform" class="form">
+	    <h3>Result:</h3>
+		<ul>
+		<li>The black number indicates the number of participants who are correct in this checkbox;<br/>
+		the red or green number indicates the number of participants who are incorrect.</li>
+		<li>Red indicates that the reality is more dangerous than user thought;<br/>
+		green indicates that the reality is more secure than user thought.</li></ul> <br/>
+<b>Scenario:</b>
+<span id='scenario' style='display:block;'>You visit http://emailprovider.com</span>
+<table border='1' style='display: block;'>
+<tr>
+<th width='20%'></th>
+<th width='16%'>emailprovider.com</th>
+<th width='16%'>emailprovider.com's ISP</th>
+<th width='16%'>Your ISP</th>
+<th width='16%'>A computer on your network</th>
+<th width='16%'>Your computer</th>
+</tr>
+<tr>
+<th>Your Home IP address</th>
+<td>13 / <font color='red'> 1</font></td>
+<td>13 / <font color='red'> 1</font></td>
+<td>14 / 0</td>
+<td>13 / <font color='red'> 1</font></td>
+<td>14 / 0</td>
+</tr>
+<tr>
+<th>Your Email Address</th>
+<td>14 / 0</td>
+<td> 9 / <font color='red'> 5</font></td>
+<td>10 / <font color='red'> 4</font></td>
+<td> 9 / <font color='red'> 5</font></td>
+<td>13 / <font color='red'> 1</font></td>
+</tr>
+<tr>
+<th>Your Email Password</th>
+<td>14 / 0</td>
+<td> 8 / <font color='red'> 6</font></td>
+<td> 8 / <font color='red'> 6</font></td>
+<td> 6 / <font color='red'> 8</font></td>
+<td>13 / <font color='red'> 1</font></td>
+</tr>
+<tr>
+<th>Your OS & Browser</th>
+<td>14 / 0</td>
+<td>13 / <font color='red'> 1</font></td>
+<td>13 / <font color='red'> 1</font></td>
+<td>10 / <font color='red'> 4</font></td>
+<td>14 / 0</td>
+</tr>
+</table>
+<br/>
+<b>Scenario:</b>
+<span id='scenario' style='display:block;'>You visit https://www.emailprovider.com/</span>
+<table border='1' style='display: block;'>
+<tr>
+<th width='20%'></th>
+<th width='16%'>emailprovider.com</th>
+<th width='16%'>emailprovider.com's ISP</th>
+<th width='16%'>Your ISP</th>
+<th width='16%'>A computer on your network</th>
+<th width='16%'>Your computer</th>
+</tr>
+<tr>
+<th>Your Home IP address</th>
+<td>12 / <font color='red'> 2</font></td>
+<td>12 / <font color='red'> 2</font></td>
+<td>11 / <font color='red'> 3</font></td>
+<td> 9 / <font color='red'> 5</font></td>
+<td>14 / 0</td>
+</tr>
+<tr>
+<th>Your Email Address</th>
+<td>13 / <font color='red'> 1</font></td>
+<td>13 / <font color='green'> 1</font></td>
+<td>13 / <font color='green'> 1</font></td>
+<td>14 / 0</td>
+<td>14 / 0</td>
+</tr>
+<tr>
+<th>Your Email Password</th>
+<td>12 / <font color='red'> 2</font></td>
+<td>14 / 0</td>
+<td>14 / 0</td>
+<td>14 / 0</td>
+<td>13 / <font color='red'> 1</font></td>
+</tr>
+<tr>
+<th>Your OS & Browser</th>
+<td>13 / <font color='red'> 1</font></td>
+<td> 5 / <font color='green'> 9</font></td>
+<td> 6 / <font color='green'> 8</font></td>
+<td> 7 / <font color='green'> 7</font></td>
+<td>14 / 0</td>
+</tr>
+</table>
+<br/>
+<b>Scenario:</b>
+<span id='scenario' style='display:block;'>You visit http://www.emailprovider.com/ from the free wifi network at a coffee shop</span>
+<table border='1' style='display: block;'>
+<tr>
+<th width='20%'></th>
+<th width='16%'>emailprovider.com</th>
+<th width='16%'>emailprovider.com's ISP</th>
+<th width='16%'>Your ISP</th>
+<th width='16%'>A computer on your network</th>
+<th width='16%'>Your computer</th>
+</tr>
+<tr>
+<th>Your Home IP address</th>
+<td> 4 / <font color='green'>10</font></td>
+<td> 4 / <font color='green'>10</font></td>
+<td> 6 / <font color='green'> 8</font></td>
+<td> 4 / <font color='green'>10</font></td>
+<td> 2 / <font color='green'>12</font></td>
+</tr>
+<tr>
+<th>Your Email Address</th>
+<td>14 / 0</td>
+<td>10 / <font color='red'> 4</font></td>
+<td> 7 / <font color='red'> 7</font></td>
+<td>10 / <font color='red'> 4</font></td>
+<td>14 / 0</td>
+</tr>
+<tr>
+<th>Your Email Password</th>
+<td>14 / 0</td>
+<td> 8 / <font color='red'> 6</font></td>
+<td> 6 / <font color='red'> 8</font></td>
+<td> 9 / <font color='red'> 5</font></td>
+<td>14 / 0</td>
+</tr>
+<tr>
+<th>Your OS & Browser</th>
+<td>14 / 0</td>
+<td>13 / <font color='red'> 1</font></td>
+<td>10 / <font color='red'> 4</font></td>
+<td>11 / <font color='red'> 3</font></td>
+<td>14 / 0</td>
+</tr>
+</table>
+<br/>
+<b>Scenario:</b>
+<span id='scenario' style='display:block;'>You visit http://www.emailprovider.com/ using a free HTTP proxy you found online</span>
+<table border='1' style='display: block;'>
+<tr>
+<th width='20%'></th>
+<th width='16%'>emailprovider.com</th>
+<th width='16%'>emailprovider.com's ISP</th>
+<th width='16%'>Your ISP</th>
+<th width='16%'>A computer on your network</th>
+<th width='16%'>Your computer</th>
+</tr>
+<tr>
+<th>Your Home IP address</th>
+<td> 8 / <font color='green'> 6</font></td>
+<td> 8 / <font color='green'> 6</font></td>
+<td>11 / <font color='red'> 3</font></td>
+<td>12 / <font color='red'> 2</font></td>
+<td>13 / <font color='red'> 1</font></td>
+</tr>
+<tr>
+<th>Your Email Address</th>
+<td>11 / <font color='red'> 3</font></td>
+<td> 8 / <font color='red'> 6</font></td>
+<td> 8 / <font color='red'> 6</font></td>
+<td> 7 / <font color='red'> 7</font></td>
+<td>13 / <font color='red'> 1</font></td>
+</tr>
+<tr>
+<th>Your Email Password</th>
+<td>11 / <font color='red'> 3</font></td>
+<td> 6 / <font color='red'> 8</font></td>
+<td> 5 / <font color='red'> 9</font></td>
+<td> 5 / <font color='red'> 9</font></td>
+<td>13 / <font color='red'> 1</font></td>
+</tr>
+<tr>
+<th>Your OS & Browser</th>
+<td>11 / <font color='red'> 3</font></td>
+<td>10 / <font color='red'> 4</font></td>
+<td>10 / <font color='red'> 4</font></td>
+<td> 9 / <font color='red'> 5</font></td>
+<td>13 / <font color='red'> 1</font></td>
+</tr>
+</table>
+<br/>
+<b>Scenario:</b>
+<span id='scenario' style='display:block;'>You visit http://www.emailprovider.com/ using Tor</span>
+<table border='1' style='display: block;'>
+<tr>
+<th width='20%'></th>
+<th width='16%'>emailprovider.com</th>
+<th width='16%'>emailprovider.com's ISP</th>
+<th width='16%'>Your ISP</th>
+<th width='16%'>A computer on your network</th>
+<th width='16%'>Your computer</th>
+</tr>
+<tr>
+<th>Your Home IP address</th>
+<td>11 / <font color='green'> 3</font></td>
+<td>11 / <font color='green'> 3</font></td>
+<td> 7 / <font color='red'> 7</font></td>
+<td> 9 / <font color='red'> 5</font></td>
+<td>12 / <font color='red'> 2</font></td>
+</tr>
+<tr>
+<th>Your Email Address</th>
+<td>10 / <font color='red'> 4</font></td>
+<td> 6 / <font color='red'> 8</font></td>
+<td>12 / <font color='green'> 2</font></td>
+<td>13 / <font color='green'> 1</font></td>
+<td>12 / <font color='red'> 2</font></td>
+</tr>
+<tr>
+<th>Your Email Password</th>
+<td>10 / <font color='red'> 4</font></td>
+<td> 5 / <font color='red'> 9</font></td>
+<td>12 / <font color='green'> 2</font></td>
+<td>13 / <font color='green'> 1</font></td>
+<td>12 / <font color='red'> 2</font></td>
+</tr>
+<tr>
+<th>Your OS & Browser</th>
+<td>10 / <font color='red'> 4</font></td>
+<td> 8 / <font color='red'> 6</font></td>
+<td>10 / <font color='green'> 4</font></td>
+<td>10 / <font color='green'> 4</font></td>
+<td>12 / <font color='red'> 2</font></td>
+</tr>
+</table>
+<br/>
+	  </form>
+    </div>
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
